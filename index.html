@@ -1,293 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>EDMRN — Elite Dangerous Multi Route Optimizer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>EDMRN — Elite Dangerous Route Network</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
-:root {
-  --bg:#02040a;
-  --panel:rgba(10,18,40,0.9);
-  --accent:#ff7b00;
-  --accent-soft:#ffae42;
-  --text:#dbe6ff;
-  --grid:rgba(255,255,255,0.06);
-}
-
-*{box-sizing:border-box;}
-
-body{
-  margin:0;
-  font-family:'Orbitron',sans-serif;
-  background:
-    radial-gradient(circle at 15% 25%, #0a1435, transparent 60%),
-    radial-gradient(circle at 85% 75%, #050b1f, transparent 60%),
-    var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-}
-
-/* HEADER */
-header{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  padding:18px 32px;
-  border-bottom:1px solid var(--grid);
-}
-
-.logo{
-  font-size:1.4rem;
-  letter-spacing:3px;
-  color:var(--accent);
-}
-
-.title{
-  font-size:0.75rem;
-  opacity:0.8;
-  text-align:right;
-}
-
-nav{
-  display:flex;
-  gap:28px;
-  justify-content:center;
-}
-
-nav a{
-  font-size:0.7rem;
-  letter-spacing:1px;
-  text-decoration:none;
-  color:var(--text);
-  opacity:0.8;
-  position:relative;
-}
-
-nav a::after{
-  content:"";
-  position:absolute;
-  bottom:-6px;
-  left:0;
-  width:0;
-  height:1px;
-  background:var(--accent);
-  transition:width .3s;
-}
-
-nav a:hover::after{width:100%;}
-nav a:hover{opacity:1;}
-
-/* MAIN */
-main{
-  flex:1;
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:24px;
-  padding:24px;
-}
-
-.panel{
-  background:var(--panel);
-  border:1px solid var(--grid);
-  border-radius:14px;
-  padding:20px;
-  box-shadow:0 0 40px rgba(0,0,0,.6);
-}
-
-.panel h2{
-  margin-top:0;
-  font-size:.9rem;
-  letter-spacing:2px;
-  color:var(--accent-soft);
-  border-bottom:1px solid var(--grid);
-  padding-bottom:10px;
-}
-
-label{
-  display:block;
-  margin-top:14px;
-  font-size:.65rem;
-  opacity:.8;
-}
-
-input{
-  width:100%;
-  margin-top:6px;
-  padding:10px;
-  background:#050a1d;
-  border:1px solid var(--grid);
-  border-radius:6px;
-  color:var(--text);
-}
-
-button{
-  width:100%;
-  margin-top:22px;
-  padding:14px;
-  border:none;
-  border-radius:10px;
-  background:linear-gradient(135deg,#ff7b00,#ffae42);
-  color:#000;
-  font-weight:600;
-  letter-spacing:2px;
-  cursor:pointer;
-}
-
-/* MAP */
-.map{
-  position:relative;
-  border-radius:14px;
-  background:
-    repeating-linear-gradient(0deg,transparent,transparent 29px,var(--grid) 30px),
-    repeating-linear-gradient(90deg,transparent,transparent 29px,var(--grid) 30px),
-    #020716;
-  overflow:hidden;
-}
-
-/* SOLAR SYSTEM */
-.solar-system{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.orbit{
-  position:absolute;
-  border:1px dashed rgba(255,255,255,0.12);
-  border-radius:50%;
-  animation:spin linear infinite;
-}
-
-.orbit.mercury{width:120px;height:120px;animation-duration:12s;}
-.orbit.venus{width:180px;height:180px;animation-duration:18s;}
-.orbit.earth{width:250px;height:250px;animation-duration:26s;}
-.orbit.mars{width:320px;height:320px;animation-duration:34s;}
-
-.planet{
-  position:absolute;
-  top:-4px;
-  left:50%;
-  transform:translateX(-50%);
-  border-radius:50%;
-}
-
-.mercury .planet{width:6px;height:6px;background:#aaa;}
-.venus .planet{width:8px;height:8px;background:#d4b07a;}
-.earth .planet{width:9px;height:9px;background:#4fa3ff;}
-.mars .planet{width:7px;height:7px;background:#ff6a3d;}
-
-.sun{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:radial-gradient(circle,#fff2c4,#ffae42,#ff7b00);
-  box-shadow:0 0 40px #ffae42;
-  animation:pulse 3s ease-in-out infinite;
-}
-
-@keyframes spin{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
-}
-
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 30px #ffae42;}
-  50%{box-shadow:0 0 55px #ffae42;}
-}
-
-/* FOOTER */
-footer{
-  border-top:1px solid var(--grid);
-  padding:18px 32px;
-  font-size:.6rem;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  opacity:.75;
-}
-
-.footer-links a{
-  margin-right:16px;
-  text-decoration:none;
-  color:var(--text);
-}
-
-.thanks{text-align:right;}
-.thanks span{color:var(--accent-soft);}
-</style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="logo">EDMRN</div>
-  <nav>
-    <a href="#">Route Tracking</a>
+<header class="site-header">
+  <div class="brand">EDMRN</div>
+
+  <nav class="main-nav">
+    <a href="#">Route Ops</a>
     <a href="#">Neutron Highway</a>
-    <a href="#">Galaxy Plotter</a>
+    <a href="#">Galaxy Map</a>
     <a href="#">Nav Beacon</a>
   </nav>
-  <div class="title">Elite Dangerous Multi Route Optimizer</div>
+
+  <div class="tagline">Elite Dangerous Multi Route Optimizer</div>
 </header>
 
-<main>
+<article class="layout">
 
-<div class="panel">
-  <h2>NAVIGATION</h2>
-  <label>Start System</label>
-  <input placeholder="Sol" />
-  <label>Destination System</label>
-  <input placeholder="Colonia" />
-  <label>Jump Range (LY)</label>
-  <input type="number" value="65" />
-  <button>OPTIMIZE NOW</button>
-</div>
+  <section class="panel navigation">
+    <h2>Navigation Core</h2>
 
-<div class="panel map">
-  <div class="solar-system">
-    <div class="sun"></div>
+    <label>Start System</label>
+    <input placeholder="Sol">
 
-    <div class="orbit mercury">
-      <div class="planet"></div>
+    <label>Destination</label>
+    <input placeholder="Colonia">
+
+    <label>Jump Range (LY)</label>
+    <input type="number" value="65">
+
+    <button id="optimizeBtn">Optimize Route</button>
+  </section>
+
+  <section class="panel map">
+    <div class="map-overlay">SOL SYSTEM</div>
+
+    <div class="solar-system">
+      <div class="sun"></div>
+
+      <div class="orbit mercury"><span></span></div>
+      <div class="orbit venus"><span></span></div>
+      <div class="orbit earth"><span></span></div>
+      <div class="orbit mars"><span></span></div>
     </div>
+  </section>
 
-    <div class="orbit venus">
-      <div class="planet"></div>
-    </div>
+</article>
 
-    <div class="orbit earth">
-      <div class="planet"></div>
-    </div>
-
-    <div class="orbit mars">
-      <div class="planet"></div>
-    </div>
-  </div>
-</div>
-
-</main>
-
-<footer>
-  <div class="footer-links">
-    <a href="#">Manual</a>
-    <a href="#">Route Optimizer</a>
-    <a href="#">Neutron Highway</a>
-    <a href="#">Support</a>
-    <div style="margin-top:8px;">© All Rights Reserved</div>
+<footer class="site-footer">
+  <div>
+    © EDMRN Command Network<br>
+    Pilots Federation Compliant
   </div>
 
-  <div class="thanks">
-    <span>Thanks</span><br>
-    Developer — Ninurta Kalhu<br>
-    CMDR Drizzydnt
+  <div class="credits">
+    Developed by Ninurta Kalhu<br>
+    CMDR <span>Drizzydnt</span>
   </div>
 </footer>
 
+<script src="js/app.js"></script>
 </body>
 </html>
