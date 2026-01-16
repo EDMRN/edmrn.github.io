@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ED NavOpt — Elite Dangerous Route Optimizer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Orbitron = Elite Dangerous vibe -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #02040a;
+      --panel: rgba(12, 20, 40, 0.85);
+      --accent: #ff7b00;
+      --accent-soft: #ffae42;
+      --text: #dbe6ff;
+      --grid: rgba(255, 255, 255, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background:
+        radial-gradient(circle at 20% 30%, #0a1430, transparent 60%),
+        radial-gradient(circle at 80% 70%, #050b1f, transparent 60%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--grid);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+
+    header span {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--grid);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    }
+
+    .panel h2 {
+      margin-top: 0;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      color: var(--accent-soft);
+      border-bottom: 1px solid var(--grid);
+      padding-bottom: 8px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.7rem;
+      margin-top: 14px;
+      opacity: 0.8;
+    }
+
+    input, select {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px;
+      background: #050a1d;
+      border: 1px solid var(--grid);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      background: linear-gradient(135deg, #ff7b00, #ffae42);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #000;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      filter: brightness(1.1);
+    }
+
+    .map {
+      position: relative;
+      height: 100%;
+      min-height: 400px;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 29px,
+          var(--grid) 30px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 29px,
+          var(--grid) 30px
+        ),
+        #020716;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .map::after {
+      content: "GALACTIC NAVIGATION GRID";
+      position: absolute;
+      bottom: 12px;
+      right: 16px;
+      font-size: 0.6rem;
+      opacity: 0.4;
+      letter-spacing: 2px;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 0.7rem;
+      opacity: 0.8;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.6rem;
+      opacity: 0.4;
+      padding: 12px;
+      border-top: 1px solid var(--grid);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>ED NavOpt</h1>
+  <span>Elite Dangerous Navigation & Route Optimization Client</span>
+</header>
+
+<main>
+
+  <!-- LEFT CONTROL PANEL -->
+  <div class="panel">
+    <h2>ROUTE PARAMETERS</h2>
+
+    <label>Start System</label>
+    <input placeholder="Sol" />
+
+    <label>Destination System</label>
+    <input placeholder="Colonia" />
+
+    <label>Jump Range (LY)</label>
+    <input type="number" value="65" />
+
+    <label>Optimization Mode</label>
+    <select>
+      <option>Fastest Route</option>
+      <option>Fuel Efficient</option>
+      <option>Neutron Boost</option>
+      <option>Exploration Safe</option>
+    </select>
+
+    <button>CALCULATE ROUTE</button>
+
+    <div class="status">
+      Status: Awaiting navigation data…
+    </div>
+  </div>
+
+  <!-- MAIN MAP / VISUAL -->
+  <div class="panel map">
+    <!-- Placeholder for future JS / Canvas / WebGL -->
+  </div>
+
+</main>
+
+<footer>
+  NOT AFFILIATED WITH FRONTIER DEVELOPMENTS — FAN PROJECT
+</footer>
+
+</body>
+</html>
